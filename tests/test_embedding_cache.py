@@ -100,7 +100,7 @@ def test_acceptance_literals() -> None:
 
 def test_acceptance_fragments_verbatim() -> None:
     fragments = [
-        "] and returns three vectors in input order, and a following embed(",
+        "] and returns three vectors in input order, and a following embed([",
         "]) calls it with [",
         ").hexdigest(), and the same text with model_id ",
         " raises EmbeddingCacheError with code ",
