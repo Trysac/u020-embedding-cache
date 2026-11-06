@@ -41,12 +41,8 @@ _CREATE_EMBEDDINGS = (
 _CREATE_INDEX = (
     "CREATE INDEX IF NOT EXISTS idx_embeddings_accessed ON embeddings (accessed_at, key)"
 )
-_SELECT_KEYS = (
-    "SELECT key, vector FROM embeddings WHERE key IN (SELECT value FROM json_each(?))"
-)
-_TOUCH_KEYS = (
-    "UPDATE embeddings SET accessed_at = ? WHERE key IN (SELECT value FROM json_each(?))"
-)
+_SELECT_KEYS = "SELECT key, vector FROM embeddings WHERE key IN (SELECT value FROM json_each(?))"
+_TOUCH_KEYS = "UPDATE embeddings SET accessed_at = ? WHERE key IN (SELECT value FROM json_each(?))"
 _INSERT = (
     "INSERT OR REPLACE INTO embeddings "
     "(key, model_id, dimension, vector, created_at, accessed_at) VALUES (?, ?, ?, ?, ?, ?)"
