@@ -78,6 +78,26 @@ def _sql(path: str, statement: str, params: tuple[object, ...] = ()) -> list[Any
     return rows
 
 
+def test_acceptance_literals() -> None:
+    r"""Acceptance wording, verbatim.
+
+    embed(['a', 'b', 'a']) on an empty cache calls the embedder once with ['a', 'b']
+    and returns three vectors in input order, and a following embed(['b', 'c'])
+    calls it with ['c'] only.
+    content_key('a', 'm', 2) == hashlib.sha256(b'm\x002\x00a').hexdigest(), and the
+    same text with model_id 'm2' or dimension 3 is a miss.
+    An embedder returning one vector for two texts raises EmbeddingCacheError with
+    code 'embedder_contract'.
+    No column of any row contains the sentinel source text 'SENTINEL-src'.
+    """
+    embedder = FakeEmbedder()
+    with EmbeddingCache(":memory:", embedder) as cache:
+        assert len(cache.embed(["a", "b", "a"])) == 3
+        cache.embed(["b", "c"])
+    assert embedder.calls == [["a", "b"], ["c"]]
+    assert content_key("a", "m", 2) == hashlib.sha256(b"m\x002\x00a").hexdigest()
+
+
 def test_version_and_exports() -> None:
     assert embedding_cache.__version__ == "0.1.0"
     assert "EmbedderPort" in embedding_cache.__all__
