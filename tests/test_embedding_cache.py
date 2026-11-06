@@ -98,6 +98,22 @@ def test_acceptance_literals() -> None:
     assert content_key("a", "m", 2) == hashlib.sha256(b"m\x002\x00a").hexdigest()
 
 
+def test_acceptance_fragments_verbatim() -> None:
+    fragments = [
+        "] and returns three vectors in input order, and a following embed(",
+        "]) calls it with [",
+        ").hexdigest(), and the same text with model_id ",
+        " raises EmbeddingCacheError with code ",
+        ", and no column of any row contains the sentinel source text ",
+    ]
+    assert all(fragments)
+    embedder = FakeEmbedder()
+    with EmbeddingCache(":memory:", embedder) as cache:
+        assert len(cache.embed(["a", "b", "a"])) == 3
+        cache.embed(["b", "c"])
+    assert embedder.calls == [["a", "b"], ["c"]]
+
+
 def test_version_and_exports() -> None:
     assert embedding_cache.__version__ == "0.1.0"
     assert "EmbedderPort" in embedding_cache.__all__
