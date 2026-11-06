@@ -1,21 +1,22 @@
-"""SQLite disk cache for embeddings keyed by content hash, model id and dimension, with batched misses, bit-exact float64 storage and LRU eviction"""
+"""SQLite disk cache for embeddings keyed by content hash, model id and dimension."""
 
 from __future__ import annotations
 
-__all__ = ["__version__", "normalize"]
+from embedding_cache.cache import (
+    CacheStats,
+    EmbedderPort,
+    EmbeddingCache,
+    EmbeddingCacheError,
+    content_key,
+)
+
+__all__ = [
+    "CacheStats",
+    "EmbedderPort",
+    "EmbeddingCache",
+    "EmbeddingCacheError",
+    "__version__",
+    "content_key",
+]
 
 __version__ = "0.1.0"
-
-
-def normalize(value: str) -> str:
-    """Return ``value`` trimmed and lower-cased.
-
-    Placeholder API created by the template: replace it with the utility's real behavior.
-
-    Raises:
-        ValueError: if ``value`` is empty or only whitespace.
-    """
-    cleaned = value.strip()
-    if not cleaned:
-        raise ValueError("value must not be empty")
-    return cleaned.lower()
