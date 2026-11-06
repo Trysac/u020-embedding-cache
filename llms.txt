@@ -1,0 +1,16 @@
+# embedding-cache
+
+> SQLite disk cache for embeddings keyed by content hash, model id and dimension, with batched misses, bit-exact float64 storage and LRU eviction Python package `trysac-embedding-cache`, import name `embedding_cache`, MIT licensed,
+> Python >= 3.10, no runtime dependencies.
+
+## Docs
+
+- [README](README.md): problem, install, usage example
+- [AGENTS](AGENTS.md): commands, folder map, conventions, limits
+- [Architecture](docs/ARCHITECTURE.md): shape of the package and its public API
+- [Testing](docs/TESTING.md): how to run and extend the tests
+
+## Optional
+
+- [Stack](docs/STACK.md): tools used and discarded
+- [Changelog](CHANGELOG.md): release history
